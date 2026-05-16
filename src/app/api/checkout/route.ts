@@ -86,7 +86,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+   const line_items: NonNullable<
+  Stripe.Checkout.SessionCreateParams["line_items"]
+> = [];
 
     for (const item of cart.items) {
       const product: any = item.product;
