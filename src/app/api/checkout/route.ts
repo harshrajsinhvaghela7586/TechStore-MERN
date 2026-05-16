@@ -9,7 +9,9 @@ import Product from "@/models/Product";
 
 import { verifyToken } from "@/lib/verifyToken";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const stripe = new Stripe(
+  process.env.STRIPE_SECRET_KEY!
+);
 
 export async function POST(req: Request) {
   try {
@@ -52,6 +54,22 @@ export async function POST(req: Request) {
       );
     }
 
+    const appUrl =
+      process.env.NEXT_PUBLIC_APP_URL ||
+      process.env.NEXT_PUBLIC_BASE_URL;
+
+    if (!appUrl) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "App URL is not configured",
+        },
+        {
+          status: 500,
+        }
+      );
+    }
+
     const cart = await Cart.findOne({
       user: user._id,
     }).populate("items.product");
@@ -67,12 +85,26 @@ export async function POST(req: Request) {
         }
       );
     }
-const line_items = [];
+
+    const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
     for (const item of cart.items) {
       const product: any = item.product;
 
-      const freshProduct = await Product.findById(product._id);
+      if (!product?._id) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Invalid cart item",
+          },
+          {
+            status: 400,
+          }
+        );
+      }
+
+      const freshProduct =
+        await Product.findById(product._id);
 
       if (!freshProduct) {
         return NextResponse.json(
@@ -106,42 +138,59 @@ const line_items = [];
             name: freshProduct.title,
 
             images:
-              freshProduct.images && freshProduct.images.length > 0
+              freshProduct.images &&
+              freshProduct.images.length > 0
                 ? [freshProduct.images[0]]
                 : [],
           },
 
-          unit_amount: Math.round(Number(freshProduct.price) * 100),
+          unit_amount: Math.round(
+            Number(freshProduct.price) * 100
+          ),
         },
 
-        quantity: item.quantity,
+        quantity: Number(item.quantity),
       });
     }
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+    if (line_items.length === 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "No valid products found in cart",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
 
-      line_items,
+    const session =
+      await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
 
-      mode: "payment",
+        line_items,
 
-      metadata: {
-        userId: user._id.toString(),
+        mode: "payment",
 
-        shippingAddress: JSON.stringify(address),
-      },
+        metadata: {
+          userId: user._id.toString(),
 
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+          shippingAddress:
+            JSON.stringify(address),
+        },
 
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cart`,
-    });
+        success_url: `${appUrl}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+
+        cancel_url: `${appUrl}/cart`,
+      });
 
     return NextResponse.json({
       success: true,
       url: session.url,
     });
   } catch (error) {
-    console.log(error);
+    console.log("CHECKOUT ERROR:", error);
 
     return NextResponse.json(
       {
