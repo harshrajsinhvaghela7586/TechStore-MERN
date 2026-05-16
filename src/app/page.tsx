@@ -527,8 +527,8 @@ export default function HomePage() {
                             .slice(0, 5)
                             .map(
                               (
-                                _,
-                                index
+                                _:unknown,
+                                index:number
                               ) => (
                                 <button
                                   key={
