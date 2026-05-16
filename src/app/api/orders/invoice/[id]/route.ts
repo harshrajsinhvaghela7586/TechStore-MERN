@@ -96,7 +96,7 @@ export async function GET(
     const download =
       req.nextUrl.searchParams.get("download") === "true";
 
-    return new Response(invoicePdf, {
+    return new Response(new Uint8Array(invoicePdf), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
