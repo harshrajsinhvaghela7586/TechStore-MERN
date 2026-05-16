@@ -1,36 +1,263 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TechStore MERN - Full Stack E-Commerce Platform
 
-## Getting Started
+TechStore MERN is a modern full-stack e-commerce web application built with **Next.js, TypeScript, MongoDB, Stripe, Tailwind CSS, and Cloudinary**.  
+It includes a complete shopping flow for users and a dedicated admin panel for managing products, orders, and users.
 
-First, run the development server:
+---
+
+## Live Demo
+
+```txt
+https://your-project-name.vercel.app
+```
+
+---
+
+## Demo Credentials
+
+### Admin
+
+```txt
+Email: admin@example.com
+Password: admin123
+```
+
+### User
+
+```txt
+Email: user@example.com
+Password: user123
+```
+
+> These credentials are for demo/testing only.
+
+---
+
+## Features
+
+### User Features
+
+- User registration and login
+- JWT-based authentication
+- Browse products
+- Product details page
+- Product search
+- Add to cart
+- Update cart quantity
+- Remove items from cart
+- Delivery address form
+- Stripe payment checkout
+- View order history
+- Download invoice PDF
+- Responsive UI
+
+### Admin Features
+
+- Admin dashboard
+- Add products
+- Edit products
+- Delete products
+- Upload product images
+- View all orders
+- View order details
+- Manage users
+- Block users
+- Delete users
+- Role-based access control
+
+---
+
+## Tech Stack
+
+- Next.js
+- React.js
+- TypeScript
+- MongoDB
+- Mongoose
+- Tailwind CSS
+- Shadcn UI
+- Stripe
+- Cloudinary
+- JWT
+- Bcrypt
+- Nodemailer
+- Axios
+- Sonner
+
+---
+
+## Screenshots
+
+Create a folder:
+
+```txt
+public/screenshots
+```
+
+Add your screenshots using the names below.
+
+---
+
+## User Side Screenshots
+
+### Home Page
+
+![User Home](./public/screenshots/user-home.png)
+
+### Product Details
+
+![Product Details](./public/screenshots/user-product-details.png)
+
+### Cart Page
+
+![Cart Page](./public/screenshots/user-cart.png)
+
+### Checkout Page
+
+![Checkout Page](./public/screenshots/user-checkout.png)
+
+### Orders Page
+
+![Orders Page](./public/screenshots/user-orders.png)
+
+---
+
+## Admin Side Screenshots
+
+### Admin Dashboard
+
+![Admin Dashboard](./public/screenshots/admin-dashboard.png)
+
+### Product Management
+
+![Admin Products](./public/screenshots/admin-products.png)
+
+### Add Product
+
+![Add Product](./public/screenshots/admin-add-product.png)
+
+### Order Management
+
+![Admin Orders](./public/screenshots/admin-orders.png)
+
+### User Management
+
+![Admin Users](./public/screenshots/admin-users.png)
+
+---
+
+## Environment Variables
+
+Create a `.env.local` file in the root folder and add:
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
+
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+
+EMAIL_USER=your_email
+EMAIL_PASS=your_email_app_password
+```
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/techstore-mern.git
+```
+
+Go to the project folder:
+
+```bash
+cd techstore-mern
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open in browser:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```txt
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Build
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run production server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm start
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The project can be deployed on **Vercel**.
+
+Basic deployment steps:
+
+1. Push code to GitHub
+2. Import repository in Vercel
+3. Add environment variables
+4. Deploy the project
+5. Add Stripe webhook URL in Stripe Dashboard
+
+---
+
+## Stripe Webhook
+
+For local testing:
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+For production, add this webhook URL in Stripe Dashboard:
+
+```txt
+https://your-domain.vercel.app/api/webhooks/stripe
+```
+
+---
+
+## Project Status
+
+```txt
+Completed - Production Ready MVP
+```
+
+---
+
+## Author
+
+```txt
+Harshrajsinh Vaghela
+MERN Stack Developer
+```
