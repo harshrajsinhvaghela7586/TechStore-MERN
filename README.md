@@ -8,25 +8,19 @@ It includes a complete shopping flow for users and a dedicated admin panel for m
 ## Live Demo
 
 ```txt
-https://your-project-name.vercel.app
+https://tech-store-mern.vercel.app
 ```
 
 ---
 
 ## Demo Credentials
 
-### Admin
-
-```txt
-Email: admin@example.com
-Password: admin123
-```
 
 ### User
 
 ```txt
-Email: user@example.com
-Password: user123
+Email: user@techstore.com
+Password: Qwer@1234
 ```
 
 > These credentials are for demo/testing only.
@@ -87,7 +81,7 @@ Password: user123
 ---
 
 ## Screenshots
-
+### Screenshots use demo data. Sensitive customer, payment, and address details are hidden for privacy.
 Create a folder:
 
 ```txt
@@ -156,6 +150,9 @@ JWT_SECRET=your_jwt_secret
 
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
+For production:
+NEXT_PUBLIC_APP_URL=https://tech-store-mern.vercel.app
+
 STRIPE_SECRET_KEY=your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 
@@ -174,7 +171,7 @@ EMAIL_PASS=your_email_app_password
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/techstore-mern.git
+git clone https://github.com/harshrajsinhvaghela7586/TechStore-MERN.git
 ```
 
 Go to the project folder:
