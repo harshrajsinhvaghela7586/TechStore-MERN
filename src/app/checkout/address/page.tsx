@@ -8,12 +8,13 @@ import {
 } from "next/navigation";
 
 import {
+  Suspense,
   useState,
 } from "react";
 
 import { toast } from "sonner";
 
-export default function AddressPage() {
+function AddressPageContent() {
   const router = useRouter();
 
   const searchParams =
@@ -35,7 +36,9 @@ export default function AddressPage() {
     });
 
   const handleChange = (
-    e: any
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement
+    >
   ) => {
     setFormData({
       ...formData,
@@ -45,50 +48,50 @@ export default function AddressPage() {
   };
 
   const handleCheckout =
-  async () => {
-    try {
-      if (
-        !formData.fullName ||
-        !formData.phone ||
-        !formData.address ||
-        !formData.city ||
-        !formData.pincode
-      ) {
+    async () => {
+      try {
+        if (
+          !formData.fullName ||
+          !formData.phone ||
+          !formData.address ||
+          !formData.city ||
+          !formData.pincode
+        ) {
+          toast.error(
+            "Please fill all fields"
+          );
+
+          return;
+        }
+
+        setLoading(true);
+
+        const res =
+          await axios.post(
+            "/api/checkout",
+            {
+              address: formData,
+              type,
+            }
+          );
+
+        if (res.data.url) {
+          window.location.href =
+            res.data.url;
+        }
+      } catch (error: any) {
+        console.log(error);
+
         toast.error(
-          "Please fill all fields"
+          error.response?.data
+            ?.message ||
+            "Checkout failed"
         );
-
-        return;
+      } finally {
+        setLoading(false);
       }
+    };
 
-      setLoading(true);
-
-      const res =
-        await axios.post(
-          "/api/checkout",
-          {
-            address: formData,
-          }
-        );
-
-      if (res.data.url) {
-        window.location.href =
-          res.data.url;
-      }
-    } catch (error: any) {
-      console.log(error);
-
-      toast.error(
-        error.response?.data
-          ?.message ||
-          "Checkout failed"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  
   return (
     <div className="min-h-screen bg-[#0B1120] text-white">
       <div className="max-w-3xl mx-auto px-4 py-16">
@@ -97,7 +100,6 @@ export default function AddressPage() {
         </h1>
 
         <div className="rounded-[40px] border border-gray-800 bg-[#111827] p-10 space-y-6">
-          
           <input
             name="fullName"
             value={formData.fullName}
@@ -123,7 +125,6 @@ export default function AddressPage() {
           />
 
           <div className="grid grid-cols-2 gap-5">
-            
             <input
               name="city"
               value={formData.city}
@@ -144,7 +145,7 @@ export default function AddressPage() {
           <button
             onClick={handleCheckout}
             disabled={loading}
-            className="w-full h-14 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold text-lg"
+            className="w-full h-14 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold text-lg disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {loading
               ? "Redirecting..."
@@ -153,5 +154,19 @@ export default function AddressPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AddressPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#0B1120] text-white flex items-center justify-center">
+          Loading checkout address...
+        </div>
+      }
+    >
+      <AddressPageContent />
+    </Suspense>
   );
 }
