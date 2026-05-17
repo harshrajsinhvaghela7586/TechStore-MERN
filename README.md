@@ -114,29 +114,6 @@ Add your screenshots using the names below.
 
 ![Orders Page](./public/screenshots/user-orders.png)
 
----
-
-## Admin Side Screenshots
-
-### Admin Dashboard
-
-![Admin Dashboard](./public/screenshots/admin-dashboard.png)
-
-### Product Management
-
-![Admin Products](./public/screenshots/admin-products.png)
-
-### Add Product
-
-![Add Product](./public/screenshots/admin-add-product.png)
-
-### Order Management
-
-![Admin Orders](./public/screenshots/admin-orders.png)
-
-### User Management
-
-![Admin Users](./public/screenshots/admin-users.png)
 
 ---
 
